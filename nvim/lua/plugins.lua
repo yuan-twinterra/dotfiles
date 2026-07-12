@@ -37,7 +37,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.comand('colorscheme ghostty')
+      vim.cmd('colorscheme ghostty')
     end
   },
 }
