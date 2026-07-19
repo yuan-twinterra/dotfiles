@@ -1,15 +1,6 @@
-# font
-font-family = "Fira Code Medium"
-font-family-bold = "Fira Code Bold"
-font-family-italic = "Fira Code Medium"
-font-family-bold-italic = "Fira Code Bold"
-font-feature = "cv02,cv06,ss01,ss05,ss08"
-font-size = 12
-adjust-cell-width = -10%
+font-family = "Ubuntu Mono"
+font-size = 13
 adjust-cell-height = 10%
-
-# color
-theme = MaterialDarker
 
 # keybind
 keybind = super+backspace=text:\x15
