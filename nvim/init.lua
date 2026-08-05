@@ -162,10 +162,10 @@ vim.api.nvim_create_autocmd("FileType", {
 -- =============================================================================
 
 -- Coq settings
-vim.g.coq_settings = {
-  auto_start = true,
-  ['keymap.jump_to_mark'] = '<c-y>',
-}
+require("coq").setup({})
+
+vim.keymap.set({ 'i', 's' }, '<c-y>', function() vim.snippet.jump(1) end,
+  { silent = true, desc = 'Jump to next snippet tabstop' })
 
 local on_attach = function(client, bufnr)
   vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
