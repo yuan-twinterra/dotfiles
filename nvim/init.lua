@@ -125,9 +125,11 @@ vim.keymap.set('n', '<leader>f', ':NERDTreeFind<CR>', { silent = true })
 vim.g.NERDTreeWinSize = '50'
 
 -- Telescope & Search Commands
-vim.keymap.set('n', '<C-P>', '<cmd>Telescope myles<CR>', { silent = true })
-vim.keymap.set('n', '<C-\\>', '<cmd>Telescope biggrep r<CR>', { silent = true })
-vim.keymap.set('n', '<C-]>', '<cmd>Telescope buffers<CR>', { silent = true })
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<C-P>', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<C-\\>', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<C-]>', builtin.buffers, { desc = 'Telescope buffers' })
+
 
 -- Treat visually wrapped line as a separate line when moving cursor
 vim.keymap.set('n', 'j', [[v:count ? 'j' : 'gj']], { expr = true, silent = true })
@@ -187,17 +189,13 @@ local on_attach = function(client, bufnr)
 end
 
 -- vim.lsp.log.set_level("debug")
-
 local servers = {"gopls", "pyright"}
-
--- Safely load Coq for capabilities
-local coq_ok, coq = pcall(require, "coq")
-local build_capabilities = coq_ok and coq.lsp_ensure_capabilities or function(opts) return opts end
-
 -- Modern Native Server Setup Loop
+-- No coq.lsp_ensure_capabilities wrapper: it is a no-op in coq.nvim v2, and
+-- vim.lsp.protocol.make_client_capabilities() already advertises what v1 injected.
 for _, lsp in ipairs(servers) do
-  vim.lsp.config(lsp, build_capabilities({
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
-  }))
+  })
   vim.lsp.enable(lsp)
 end
