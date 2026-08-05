@@ -11,8 +11,24 @@ return {
   -- Telescope & Search
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" }
+    dependencies = { "nvim-lua/plenary.nvim" },
+    -- Lua patterns matched against each result's path (not globs), applied to
+    -- find_files, live_grep, etc.
+    opts = {
+      defaults = {
+        file_ignore_patterns = {
+          "node_modules/",
+          "__pycache__/",
+          "%.pyc$",
+          "^bazel%-[^/]+/", -- bazel-bin, bazel-out, bazel-testlogs, bazel-<workspace>
+          "%.git/",
+          "%.venv/",
+          "venv/",
+        },
+      },
+    },
   },
+
   { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
   -- Treesitter & UI
